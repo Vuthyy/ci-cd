@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import Title from "@/components/ui/Title/Title";
 import Products from "../components/ui/Products/Products";
 import Loading from "./loading";
-import Button from "@/components/ui/Button/Button";
+import { ProductProps } from "@/components/ui/Products/Products"; // Import ProductProps
 
-const getData = async (page = 1, perPage = 8) => {
+const getData = async (page = 1, perPage = 8): Promise<ProductProps[]> => {
   try {
     const res = await fetch(
       `http://localhost:5000/product?_page=${page}&_per_page=${perPage}`
@@ -24,7 +24,7 @@ const getData = async (page = 1, perPage = 8) => {
 };
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<ProductProps[]>([]); // Use ProductProps here
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -59,14 +59,6 @@ export default function Home() {
 
   return (
     <main>
-      <Button
-        variant="default"
-        size="default"
-        onClick={() => console.log("Button clicked")}
-        aria-label="Click me"
-      >
-        {" "}
-      </Button>
       <Title title="All Products Here" />
       {isLoading && currentPage === 1 ? (
         <Loading />

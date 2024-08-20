@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface ProductProps {
+export interface ProductProps {
   _id: number;
   title: string;
   description: string;

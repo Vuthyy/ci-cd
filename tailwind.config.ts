@@ -8,6 +8,9 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/flowbite/**/*.js",
+    "./app/**/*.{js,ts,jsx,tsx}", // Match files in your `app` directory
+    "./components/**/*.{js,ts,jsx,tsx}", // Match files in your `components` directory
+    "./pages/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: "class",
   theme: {
