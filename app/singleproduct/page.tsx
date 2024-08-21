@@ -31,7 +31,7 @@ const SingleProduct = async ({ searchParams }: Props) => {
           <b className="text-gray-700">Description</b>
           <p className="text-gray-700">{product?.description}</p>
           <h3 className="text-3xl font-bold text-gray-700 mt-4">
-            Pice: ${product?.price}
+            Pices: ${product?.price}
           </h3>
         </div>
       </div>
