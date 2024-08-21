@@ -10,7 +10,8 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook -- --coverage"
+    "test-storybook": "test-storybook",
+    "serve-storybook": "serve storybook-static"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
