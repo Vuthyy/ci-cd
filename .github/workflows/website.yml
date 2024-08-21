@@ -23,22 +23,22 @@ jobs:
         run: npm install
 
       - name: Install Playwright browsers
-        run: npm playwright install
+        run: npx playwright install
         # This installs the required Playwright browsers
 
       - name: Start Storybook
-        run: npm storybook --ci --port 6006 &
+        run: npm run storybook -- --ci --port 6006 &
         # This command starts Storybook in the background
 
       - name: Wait for Storybook to be available
         run: npx wait-on http://127.0.0.1:6006
 
       - name: Run tests with coverage
-        run: npm test-storybook --coverage
+        run: npm run test-storybook -- --coverage
 
       - name: Check coverage threshold
         run: |
-          COVERAGE=$(grep -o '"statements": [0-9.]*' ./coverage/coverage-summary.json | awk '{print $2}')
+          COVERAGE=$(jq '.total.statements.pct' ./coverage/coverage-summary.json)
           if (( $(echo "$COVERAGE < 50.0" |bc -l) )); then
             echo "Test coverage ($COVERAGE%) is below the required threshold of 50%."
             exit 1
