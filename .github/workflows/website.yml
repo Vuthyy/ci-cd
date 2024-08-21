@@ -20,25 +20,25 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Install Playwright browsers
-        run: npx playwright install
+        run: yarn playwright install
         # This installs the required Playwright browsers
 
       - name: Start Storybook
-        run: npm run storybook -- --ci --port 6006 &
+        run: yarn storybook --ci --port 6006 &
         # This command starts Storybook in the background
 
       - name: Wait for Storybook to be available
         run: npx wait-on http://127.0.0.1:6006
 
       - name: Run tests with coverage
-        run: npm run test-storybook -- --coverage
+        run: yarn test-storybook --coverage
 
       - name: Check coverage threshold
         run: |
-          COVERAGE=$(grep -oP '(?<=<span class="strong">)[0-9]+\.[0-9]+(?=%</span>)' coverage/lcov-report/index.html | head -1)
+          COVERAGE=$(grep -o '"statements": [0-9.]*' ./coverage/coverage-summary.json | awk '{print $2}')
           if (( $(echo "$COVERAGE < 50.0" |bc -l) )); then
             echo "Test coverage ($COVERAGE%) is below the required threshold of 50%."
             exit 1
@@ -69,7 +69,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
