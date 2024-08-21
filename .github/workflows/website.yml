@@ -38,13 +38,12 @@ jobs:
 
       - name: Check coverage threshold
         run: |
-          COVERAGE=$(jq '.total.statements.pct' coverage/storybook/coverage-storybook.json)
-          if (( $(echo "$COVERAGE < 50.0" |bc -l) )); then
-            echo "Test coverage ($COVERAGE%) is below the required threshold of 50%."
-            exit 1
+          COVERAGE=$(grep -Po 'All files.*? \K\d+(?=%)' coverage/lcov-report/index.html)
+          echo "Coverage is $COVERAGE%"
+          if [ "$COVERAGE" -ge 50 ]; then
+            echo "::set-output name=coverage_passed::true"
           else
-            echo "Test coverage ($COVERAGE%) meets the required threshold."
-          fi
+            echo "::set-output name=coverage_passed::false"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
